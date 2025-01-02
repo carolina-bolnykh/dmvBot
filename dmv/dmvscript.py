@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup as bs
 import requests
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+import time
 from time import sleep
 import smtplib
 from email.mime.text import MIMEText
@@ -10,6 +12,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+print(time.time())
+options = Options()
+options.headless = True
 dmv_url = os.getenv("DMV_URL")
 page = requests.get(dmv_url)
 soup = bs(page.content, 'html.parser')
@@ -38,7 +43,8 @@ def send_email(subject, body):
     server.quit()
 
 # chrome webdriver
-driver = webdriver.Chrome()
+# set up as headless driver (no gui)
+driver = webdriver.Chrome(options=options)
 driver.get(dmv_url)
 sleep(3)
 createAptBtn = driver.find_element("id", "cmdMakeAppt")
@@ -50,7 +56,7 @@ sleep(3)
 claytonOffice = driver.find_element('xpath', '//*[@title="Create an appointment at the Clayton office, located at 1665 Old U.S. 70, Clayton, NC 27520"]')
 # only select active units (available for appointment)
 parentDiv = claytonOffice.find_element('xpath', './..')
-print(parentDiv.text)
+# print(parentDiv.text)
 # status = parentDiv.find_elements('xpath', '//*[@class="Active-Unit"]')
 if("we don’t have availability at this moment" in parentDiv.text):
     print("no appointments available for the next 3 months")
