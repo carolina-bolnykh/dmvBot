@@ -1,6 +1,6 @@
 ## DMV Bot
 
-I want to make a bot that periodically tracks when the next available driver license appointment becomes available at the Clayton DMV
+a bot that periodically tracks when the next available driver license appointment becomes available at the Clayton DMV
 
 - .env params for clayton location: "1665 Old U.S. 70, Clayton, NC 27520"
   
