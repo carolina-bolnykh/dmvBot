@@ -3,6 +3,7 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import time
 from time import sleep
 import smtplib
@@ -13,6 +14,8 @@ import os
 
 load_dotenv()
 print(time.time())
+chromedriver_path = '/opt/homebrew/bin/chromedriver'
+service = Service(chromedriver_path)
 options = Options()
 options.headless = True
 dmv_url = os.getenv("DMV_URL")
@@ -43,8 +46,8 @@ def send_email(subject, body):
     server.quit()
 
 # chrome webdriver
-# set up as headless driver (no gui)
-driver = webdriver.Chrome(options=options)
+# set up headless (no gui)
+driver = webdriver.Chrome(service=service, options=options)
 driver.get(dmv_url)
 sleep(3)
 createAptBtn = driver.find_element("id", "cmdMakeAppt")
