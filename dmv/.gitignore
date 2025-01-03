@@ -1,2 +1,4 @@
 *.env
 dmv_cron.log
+chromedriver
+*.log

@@ -12,9 +12,11 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+print('found file!')
+load_dotenv('/Users/carolinabolnykh/Desktop/winterBreak/dmvBot/dmv/.env')
+print('loaded envs')
 print(time.time())
-service = Service(executable_path="chromedriver")
+service = Service(executable_path="/Users/carolinabolnykh/Desktop/winterBreak/dmvBot/dmv/chromedriver")
 options = Options()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
@@ -24,7 +26,7 @@ soup = bs(page.content, 'html.parser')
 # print(soup)
 # click the 'make an appointment' button
 btn = soup.find('button', attrs = {"id":"cmdMakeAppt"})
-# print(btn.text)
+print(btn.text)
 
 def send_email(subject, body):
     email = os.getenv("EMAIL_USER")
