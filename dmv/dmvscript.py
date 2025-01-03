@@ -14,10 +14,10 @@ import os
 
 load_dotenv()
 print(time.time())
-chromedriver_path = '/opt/homebrew/bin/chromedriver'
-service = Service(chromedriver_path)
+service = Service(executable_path="chromedriver")
 options = Options()
-options.headless = True
+options.add_argument('--headless')
+options.add_argument('--no-sandbox')
 dmv_url = os.getenv("DMV_URL")
 page = requests.get(dmv_url)
 soup = bs(page.content, 'html.parser')
@@ -65,3 +65,4 @@ if("we don’t have availability at this moment" in parentDiv.text):
     print("no appointments available for the next 3 months")
 else:
     send_email("DMVBot", "An appointment has opened at the Clayton dmv! https://skiptheline.ncdot.gov/Webapp/Appointment/Index/a7ade79b-996d-4971-8766-97feb75254de")
+driver.quit()
